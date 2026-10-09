@@ -1,0 +1,1 @@
+ALTER TABLE messages ADD COLUMN source_revision BIGINT NOT NULL DEFAULT 0;

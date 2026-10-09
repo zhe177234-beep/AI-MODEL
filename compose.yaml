@@ -1,6 +1,35 @@
 services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: merchant
+      MYSQL_USER: merchant
+      MYSQL_PASSWORD: ${DB_PASSWORD:?请在.env设置DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?请在.env设置DB_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_ROOT_PASSWORD mysqladmin ping -h localhost -uroot --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
   backend:
     build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "127.0.0.1:8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://db:3306/merchant?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+      DB_USER: merchant
+      DB_PASSWORD: ${DB_PASSWORD}
+      MERCHANT_USERNAME: ${MERCHANT_USERNAME:-merchant}
+      MERCHANT_PASSWORD: ${MERCHANT_PASSWORD:?请在.env设置至少12位客服密码}
+      MODEL_BASE_URL: ${MODEL_BASE_URL:-https://api.openai.com/v1}
+      MODEL_API_KEY: ${MODEL_API_KEY:-}
+      MODEL_NAME: ${MODEL_NAME:-}
     restart: unless-stopped
+volumes:
+  mysql-data:

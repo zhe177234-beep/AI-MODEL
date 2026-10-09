@@ -6,3 +6,6 @@ local.properties
 .env
 *.jks
 *.keystore
+**/data/
+*.log
+**/.kotlin/
