@@ -40,6 +40,9 @@ java -jar backend/target/customer-agent-0.1.0.jar
 ```
 默认数据库为工作目录下的 `data/merchant` H2 文件；MySQL 使用 `DB_URL / DB_USER / DB_PASSWORD` 配置。PowerShell 使用 `$env:MERCHANT_PASSWORD='...'`。
 
+## Windows 桌面启动版
+Windows 10/11：下载桌面启动 ZIP 并全部解压，双击 `windows/Start.cmd`。可运行 `Install-desktop-shortcut.cmd` 创建桌面入口。使用 Edge/Chrome 应用窗口连接线上服务，无需 Java/Docker；不是独立原生 EXE 或离线版。说明见 `windows/README.txt`。
+
 ## 原生 Android
 Android Studio 打开 `android/`，JDK 17，Gradle 8.9，SDK 35。可执行 `cd android && ./gradlew :app:assembleDebug`（Windows用 `gradlew.bat`），GitHub Actions 同样构建并上传 APK。
 App 登录页可填写后端地址；模拟器用 `http://10.0.2.2:8080`，线上填写 HTTPS URL。使用客服账号登录。正式发布版本拒绝明文 HTTP，需自己的发行签名。
