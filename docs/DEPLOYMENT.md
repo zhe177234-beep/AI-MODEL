@@ -2,7 +2,7 @@
 ## 免费在线演示
 URL：https://ai-model-merchant-agent.onrender.com
 Render 服务：https://dashboard.render.com/web/srv-db441ajl550s73ag0tv0
-已在用户确认的工作区创建 free、Docker、Singapore 单实例服务，连接本仓库 main 分支自动部署。
+已在用户确认的工作区创建 free、Docker、Singapore 单实例服务，使用本仓库 main 分支。当前通过公开仓库 URL 部署，推送代码不会自动上线；修改后须在 Render 选择 Manual Deploy → Deploy latest commit，或通过已授权的部署工具触发。若后续连接 Git Provider 凭据，可再启用自动部署。
 根目录 render.yaml 同步为免费方案，不创建付费磁盘或数据库。H2 文件位于 /app/data 的临时文件系统，重启、休眠或重新部署可能清空演示数据。需要长期保存时，再选择持久化数据库或付费磁盘。
 Docker build context=backend，Dockerfile=backend/Dockerfile。验收健康路径=/api/health。
 客服用户名 merchant，密码通过 Render 的 Environment 页面查看 MERCHANT_PASSWORD，未写入仓库。Android 登录页填写上面的实际 HTTPS URL。
