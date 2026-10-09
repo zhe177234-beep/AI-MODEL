@@ -10,8 +10,11 @@
 - Android assembleDebug、APK压缩包完整性与apksigner v2签名验证通过。
 - 网页JavaScript语法检查通过。
 
+- GitHub Actions 已在真实MySQL 8.4容器通过迁移与订单/退款集成测试，后端共10项测试全部通过；JAR HTTP启动与重启持久化测试同样通过。
+- Vue模板编译与生成代码语法验证通过。
+- Render blueprint官方JSON Schema验证通过。
+
 ## 未完成
-- 本环境没有Docker守护进程，MySQL运行验证已配置到GitHub Actions；等待CI结果，不能将H2结果等同于MySQL实测。
 - 当前环境禁止浏览器需要的进程套接字，Playwright未能启动，网页视觉与完整浏览器点击验收尚未完成。
 - APK尚未在真机/模拟器安装运行验收。
 - 无真实模型API密钥，真实模型连通性和回答质量尚未验证；HTTP测试使用模拟模型服务。
