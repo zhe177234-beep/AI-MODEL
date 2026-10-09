@@ -76,4 +76,15 @@ class BusinessFlowTest {
   assertEquals(before-2,shop.jdbc().queryForObject("select stock from products where id='p-lamp'",Integer.class));
  }
 
+ @Test void consoleConfigurationIsMerchantOnlyAndRejectsStaleWrites()throws Exception{
+  mvc.perform(get("/api/console/documents/settings").header("Authorization",buyer1)).andExpect(status().isForbidden());
+  long revision=json.readTree(mvc.perform(get("/api/console/documents/settings").header("Authorization",merchant)).andExpect(status().isOk()).andReturn().getResponse().getContentAsString()).get("revision").asLong();
+  String body=json.writeValueAsString(Map.of("payload","{\"storeName\":\"测试店铺\"}","revision",revision));
+  mvc.perform(post("/api/console/documents/settings").header("Authorization",merchant).contentType(MediaType.APPLICATION_JSON).content(body)).andExpect(status().isOk());
+  mvc.perform(post("/api/console/documents/settings").header("Authorization",merchant).contentType(MediaType.APPLICATION_JSON).content(body)).andExpect(status().isConflict());
+  mvc.perform(get("/api/console/documents/unknown").header("Authorization",merchant)).andExpect(status().isNotFound());
+  mvc.perform(get("/api/conversations").header("Authorization",merchant)).andExpect(status().isOk());
+  mvc.perform(post("/api/knowledge/k-shipping").header("Authorization",buyer1).contentType(MediaType.APPLICATION_JSON).content("{\"title\":\"错误编辑\",\"content\":\"错误内容\"}")).andExpect(status().isForbidden());
+ }
+
 }

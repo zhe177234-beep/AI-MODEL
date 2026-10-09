@@ -28,3 +28,8 @@
 | POST | /api/conversations/{id}/drafts/{message}/approve | 客服审核发送 |
 | GET | /api/agent/status | 客服：配置状态 |
 | GET | /api/audit | 客服：最近100条操作 |
+
+## 工作台扩展（0.2）
+- GET /api/conversations 返回 last_message、last_author、last_at、draft_count（当前修订的有效草稿数），仅客服。
+- GET/POST /api/console/documents/settings 与 /template：仅客服；POST 为 payload(JSON对象字符串)、revision。保存后版本递增，旧版本返回409。模板保存不发布商城。
+- POST /api/knowledge/{id}：仅客服修改知识，title/content 校验与新增一致，并写入审计。

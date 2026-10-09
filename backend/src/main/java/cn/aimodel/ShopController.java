@@ -27,5 +27,6 @@ public class ShopController {
  @PostMapping("/refunds/{id}/approve") public Object approve(@RequestHeader(value="Authorization",required=false)String h,@PathVariable String id){return shop.approve(auth.merchant(h),id);}
  @GetMapping("/knowledge") public Object knowledge(){return shop.knowledge();}
  @PostMapping("/knowledge") public Object knowledge(@RequestHeader(value="Authorization",required=false)String h,@Valid@RequestBody Knowledge r){var user=auth.merchant(h);String id=UUID.randomUUID().toString();shop.jdbc().update("insert into knowledge values (?,?,?)",id,r.title(),r.content());shop.audit(user.id(),"ADD_KNOWLEDGE",id,r.title());return Map.of("id",id);}
+ @PostMapping("/knowledge/{id}") public Object editKnowledge(@RequestHeader(value="Authorization",required=false)String h,@PathVariable String id,@Valid@RequestBody Knowledge r){var user=auth.merchant(h);if(shop.jdbc().update("update knowledge set title=?,content=? where id=?",r.title(),r.content(),id)==0)throw Auth.fail(404,"知识不存在");shop.audit(user.id(),"EDIT_KNOWLEDGE",id,r.title());return Map.of("id",id);}
  @GetMapping("/audit") public Object audit(@RequestHeader(value="Authorization",required=false)String h){auth.merchant(h);return shop.jdbc().queryForList("select * from audit order by created_at desc limit 100");}
 }
