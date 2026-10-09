@@ -1,15 +1,13 @@
+# 免费演示：H2文件位于临时文件系统，重启或重新部署可能清空数据。
 services:
   - type: web
     name: ai-model-merchant-agent
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
-    plan: starter
+    plan: free
+    region: singapore
     healthCheckPath: /api/health
-    disk:
-      name: merchant-data
-      mountPath: /app/data
-      sizeGB: 1
     envVars:
       - key: DB_URL
         value: jdbc:h2:file:/app/data/merchant;MODE=MySQL;DATABASE_TO_LOWER=TRUE
@@ -19,7 +17,3 @@ services:
         sync: false
       - key: MODEL_BASE_URL
         value: https://api.openai.com/v1
-      - key: MODEL_API_KEY
-        sync: false
-      - key: MODEL_NAME
-        sync: false

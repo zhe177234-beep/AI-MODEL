@@ -14,7 +14,7 @@
 - `android/`：Kotlin / Jetpack Compose 原生客服工作台
 - `backend/`：Java 17 / Spring Boot / JDBC / Vue 3 前端静态资源
 - `compose.yaml`：MySQL 8.4 + 后端
-- `render.yaml`：Render 持久化 H2 部署配置（付费服务与磁盘；尚未上线）
+- `render.yaml`：Render 免费演示配置（H2 临时存储）
 - `docs/`：使用、接口、验收与部署说明
 
 ## 本地启动：Docker
@@ -52,6 +52,6 @@ MODEL_NAME=<你账号可调用且支持工具调用的模型>
 
 ## 验证与边界
 本地已通过 Java 编译/打包与9项自动测试：权限、库存、幂等、草稿失效、接管、工具授权及模拟模型HTTP循环。详细结果见 docs/VERIFICATION.md。
-真实模型质量和公网部署必须在配置真实API凭据与托管账号后继续验证。GitHub Actions已在MySQL 8.4容器通过集成测试，后端10项测试全部通过。
+在线演示：https://ai-model-merchant-agent.onrender.com 。使用 Render 免费服务，重启或重新部署可能清空演示数据；首次唤醒可能较慢。客服账号为 `merchant`，密码查看 Render 环境变量 `MERCHANT_PASSWORD`。Android 登录页填写同一 HTTPS 地址。真实模型质量仍须配置实际 API 凭据后验证。GitHub Actions已在MySQL 8.4容器通过集成测试，后端10项测试全部通过。
 
 本版本为单店演示系统，不含真实支付、真实物流、多商家、自动发送、向量检索或大规模生产运维。知识检索使用中文字符匹配，消息通过刷新/网页5秒轮询更新。Android 采用手动刷新。
